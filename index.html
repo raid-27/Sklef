@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>بوابة المشتركين</title>
+<style>
+body { font-family: Arial, sans-serif; background: #f0f2f5; text-align: center; padding: 50px; }
+#loginBox, #dataBox { width: 350px; margin: auto; padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
+button { padding: 10px 20px; background: #007bff; color: #fff; border: none; border-radius:5px; cursor:pointer;}
+button:hover { background: #0056b3; }
+input { width: 90%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc; }
+</style>
+</head>
+<body>
+
+<div id="loginBox">
+<h2>تسجيل الدخول</h2>
+<input type="text" id="username" placeholder="اسم المستخدم"><br>
+<input type="password" id="password" placeholder="كلمة المرور"><br>
+<button onclick="login()">دخول</button>
+<p id="msg" style="color:red;"></p>
+</div>
+
+<div id="dataBox" style="display:none;">
+<h2>مرحبا، <span id="name"></span></h2>
+<p>بياناتك الخاصة:</p>
+<ul id="userData">
+<li>الملف: PDF1.pdf</li>
+<li>الباركود: QR1</li>
+<li>رابط إضافي: link1.com</li>
+</ul>
+</div>
+
+<script>
+// بيانات المستخدمين: "اسم المستخدم": "كلمة المرور"
+var users = {
+  "user1": "12345",
+  "user2": "67890"
+};
+
+// بيانات إضافية لكل مستخدم (يمكنك إضافة المزيد)
+var userData = {
+  "user1": ["PDF1.pdf", "QR1", "link1.com"],
+  "user2": ["PDF2.pdf", "QR2", "link2.com"]
+};
+
+function login() {
+  var user = document.getElementById("username").value;
+  var pass = document.getElementById("password").value;
+
+  if(users[user] && users[user] === pass){
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("dataBox").style.display = "block";
+    document.getElementById("name").innerText = user;
+
+    // عرض البيانات الخاصة بالمستخدم
+    var dataList = document.getElementById("userData");
+    dataList.innerHTML = "";
+    if(userData[user]){
+      userData[user].forEach(function(item){
+        var li = document.createElement("li");
+        li.textContent = item;
+        dataList.appendChild(li);
+      });
+    }
+  } else {
+    document.getElementById("msg").innerText = "اسم المستخدم أو كلمة المرور خاطئة";
+  }
+}
+</script>
+
+</body>
+</html>
